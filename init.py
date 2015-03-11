@@ -11,5 +11,13 @@ def LegalKVecs(maxK,L=1.0):
         # end ky
     # end kx        
     return kList
-# end def
+# end def 
 
+
+def kMag(kList):
+    magList = []
+    for k in kList:
+        magList.append( np.array(k).norm() )
+    # end for k
+    return magList
+# end def kMag
