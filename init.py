@@ -29,11 +29,16 @@ def normalizeDensity(n,N=1):
     # end for
 # end def normalizeDensity
 
-def newDensity(w,v,n=1):
-    newn = []
-    for i in range(n):
-        newn = epsilon[i]*np.array(psi[i])*np.array(psi[i])
-    # end for i
+def newDensity(w,v,N=1):
+    min = w[0]
+    minidx = 0
+    for i in range(len(w)):
+        if w[i] < min:
+            minidx = i
+        # end if
+    # end for
+    newn = w[minidx]*np.array(v[minidx])*np.array(v[minidx])
+    normalizeDensity(newn)
     return newn
 # end def newDensity
 
