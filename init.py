@@ -6,7 +6,8 @@ def LegalKVecs(maxK,L=1.0):
     for kx in range(-maxK,maxK+1):
         for ky in range(-maxK,maxK+1):
             for kz in range(-maxK,maxK+1):
-                kList.append([2*np.pi/L*kx,2*np.pi/L*ky,2*np.pi/L*kz])
+                #kList.append([2*np.pi/L*kx,2*np.pi/L*ky,2*np.pi/L*kz])
+                kList.append([kx,ky,kz])
             # end kz
         # end ky
     # end kx        
@@ -37,8 +38,7 @@ def newDensity(w,v,N=1):
             minidx = i
         # end if
     # end for
-    newn = w[minidx]*np.array(v[minidx])*np.array(v[minidx])
-    normalizeDensity(newn)
+    newn = np.array(v[minidx])*np.array(v[minidx])
     return newn
 # end def newDensity
 
