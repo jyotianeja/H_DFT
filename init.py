@@ -61,14 +61,16 @@ def newDensity(w,v,kList,N=1):
     # end for i
     psi = v[minidx][:]
     # construct \psi^*
-    psistar = psi[:]
+    psistar = list(psi)
     for i in range(len(psistar)):
         k = kList[i]
         if k[0]>0:
             for j in range(len(kList)): # find -\vec{k}
                 negk = kList[j]
                 if (negk[0]==-k[0] and negk[1]==-k[1] and negk[2]==-k[2]):
-                    psistar[i],psistar[j] = psistar[j],psistar[i]
+                    temp = psistar[i]
+                    psistar[i] = psistar[j]
+                    psistar[j] = temp
                 # end if
             # end for j
         # end if
