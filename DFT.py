@@ -46,6 +46,20 @@ def psi2density(wavevec):
     return density
 # end def psi2density
 
+def plotPsi(psi):
+    x = []
+    y = np.ones( 9 )
+    for i in range( len(kMag) ):
+        kmag = kMag[i]
+        if kmag not in x:
+            x.append(kmag)
+        # end if 
+        y[x.index(kmag)] += psi[i]
+    # end for i
+    plt.plot(x,y,'-x')
+    plt.show()
+# end def plotPsi
+
 def HamVec(n_k):
     # return Hamiltonian on planewave basis grid
     return [
@@ -68,12 +82,13 @@ if __name__ == "__main__":
     
     for step in range(maxNsteps):
         print energy
-        H=HamVec(psi2density(psi)) # !!!! This is not correct !!!!
+        H=HamVec(psi2density(psi))
         newPsi=np.zeros(kSize)
         newPsi[H.index(min(H))]=1
         psi =psi*(1-mixing)+newPsi*mixing
         normalize(psi)
-        newEnergy=np.dot(H,psi*psi) # shouldn't it be this? -> newEnergy=min(H)
+        #newEnergy=np.dot(H,psi*psi) # shouldn't it be this? -> newEnergy=min(H)
+        newEnergy=min(H)
         if abs(energy-newEnergy)<thres:
             converged = True
             break
@@ -83,19 +98,6 @@ if __name__ == "__main__":
     
     if converged:
         print "converged in ", step, " steps, energy=", energy
-        
-        x = []
-        print psi
-        y = np.ones( 9 )
-        for i in range( len(kMag) ):
-            kmag = kMag[i]
-            if kmag not in x:
-                x.append(kmag)
-            # end if 
-            y[x.index(kmag)] += psi[i]
-        # end for i
-        plt.plot(x,y,'-x')
-        plt.show()
     else:
         print "Did not converge in ",step, " steps, energy=",energy
     # end if converged
